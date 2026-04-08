@@ -1,8 +1,8 @@
 ## Random Linear Classification
 
 This implementation builds a simple linear classifier from scratch using NumPy, without relying on libraries like sklearn.
-
-Instead of learning parameters through optimization, the model:
+ 
+ The model:
 - randomly generates multiple linear decision boundaries
 - evaluates each boundary on training data
 - selects the one with the lowest classification error
@@ -12,17 +12,18 @@ This demonstrates a key idea:
 
 ---
 
-## 🔹 Experiment 1: Training on Full Dataset
+## Experiment 1: Training on Full Dataset
 
 All data points were used as training data to find the best separating line.
 
 **Result:**
 - The model finds a linear boundary that separates most data points.
 - Training error is low, but this does not reflect true performance.
+- The result can be seen as Dog vs Cat.png
 
 ---
 
-## 🔹 Experiment 2: Train-Test Split (80/20)
+## Experiment 2: Train-Test Split (80/20)
 
 The dataset was split into:
 - 80% training data  
@@ -31,18 +32,37 @@ The dataset was split into:
 The model was trained on the training set and evaluated on unseen test data.
 
 **Key Observation:**
-- Performance on test data is lower than training performance.
+- Model performed well even on the testing data
 - This highlights the importance of evaluating models on unseen data to avoid misleading results.
 
 ---
 
-## 🔹 Visualization
+##Visualization
 
-![Decision Boundary](result.png)
+![Decision Boundary](results.png)
 
 ---
+##Hyperparameter Tuning using Cross-Validation
 
-## 🔹 Key Takeaways
+To improve model selection, k-fold cross-validation was used to determine the optimal number of random trials (k).
+
+### Method:
+- The dataset was split into k folds
+- For each value of k (number of random classifiers generated):
+  - The model was trained on k-1 folds
+  - Evaluated on the remaining fold
+- The average error across folds was computed
+
+### Key Insight:
+- Increasing the number of random trials improves the chance of finding a better decision boundary
+- However, beyond a certain point, improvement slows down while computation cost increases
+
+This demonstrates the trade-off between:
+- model performance  
+- computational efficiency
+------
+
+## Key Takeaways
 
 - Random search can approximate a solution but is inefficient.
 - Training accuracy alone is not a reliable metric.
