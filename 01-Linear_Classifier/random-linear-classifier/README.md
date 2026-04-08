@@ -37,12 +37,12 @@ The model was trained on the training set and evaluated on unseen test data.
 
 ---
 
-##Visualization
+## Visualization
 
 ![Decision Boundary](results.png)
 
 ---
-##Hyperparameter Tuning using Cross-Validation
+## Hyperparameter Tuning using Cross-Validation
 
 To improve model selection, k-fold cross-validation was used to determine the optimal number of random trials (k).
 
