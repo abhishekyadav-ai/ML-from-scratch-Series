@@ -87,5 +87,4 @@ Implementing Logistic Regression made it easier to connect several concepts toge
 ---
 
 ## Notes
-
-This implementation was created as part of my effort to build a stronger understanding of Machine Learning fundamentals before moving toward larger real-world ML projects.
+This project was implemented as part of a broader effort to understand Machine Learning algorithms from first principles and build stronger intuition for how they work internally before moving toward larger real-world ML projects.
