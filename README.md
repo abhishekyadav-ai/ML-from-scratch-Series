@@ -1,3 +1,2 @@
 # ML-from-scratch-Series
-Implementing machine learning and deep learning algorithms from first principles to understand the underlying mathematics, optimization techniques, 
-and implementation details without relying on high-level libraries
+A collection of machine learning and deep learning algorithms implemented from scratch to build a deep understanding of their mathematical foundations, optimization, and implementation using only Python and NumPy
