@@ -1,16 +1,18 @@
 
 # This file contains the complete implementation of the neural network from scratch up to the Adagrad optimizer.git 
 
-#Importing package
 import numpy as np
-
-#Dense layer
 
 class Layer_dense:
     #Layer intialization
-    def __init__(self, n_inputs, n_neurons):
+    def __init__(self, n_inputs, n_neurons, weight_regularizer_l1=0, weight_regularizer_l2=0, bias_regularizer_l1=0, bias_regularizer_l2=0):
         self.weights=0.01*np.random.randn(n_inputs, n_neurons)
         self.biases=np.zeros((1,n_neurons))
+        #Set regularization strenght
+        self.weight_regularizer_l1=weight_regularizer_l1
+        self.weight_regularizer_l2=weight_regularizer_l2
+        self.bias_regularizer_l1=bias_regularizer_l1
+        self.bias_regularizer_l2=bias_regularizer_l2
 
     #Forward pass
     def forward(self, inputs):
@@ -23,6 +25,28 @@ class Layer_dense:
         #gradients on parameters
         self.dweights=np.dot(self.inputs.T, dvalues)
         self.dbiases=np.sum(dvalues, axis=0,keepdims=True)
+
+        #Gradients on regularization
+        #l1 on weights
+        if self.weight_regularizer_l1>0:
+            dl1=np.ones_like(self.weights)
+            dl1[self.weights<0]=-1
+            self.dweights+=self.weight_regularizer_l1*dl1
+
+        #L2 on weights
+        if self.weight_regularizer_l2>0:
+            self.dweights+=2*self.weight_regularizer_l2*self.weights
+
+        #L1 on biases
+        if self.bias_regularizer_l1>0:
+            dl1=np.ones_like(self.biases)
+            dl1[self.biases<0]=-1
+            self.dbiases+=self.bias_regularizer_l1*dl1
+
+        #L2 on biases
+        if self.bias_regularizer_l2>0:
+            self.dbiases+=2*self.bias_regularizer_l2*self.biases
+
 
         #gradient on values
         self.dinputs=np.dot(dvalues, self.weights.T)
@@ -60,7 +84,30 @@ class Activation_Softmax:
 # Implementing the loss class
 
 class Loss:
-    # Calculates the data and regularization losses
+    # regularization loss calculation
+    def regularization_loss(self, layer):
+        #0 by default
+        regularization_loss=0
+
+        #L1 regularization-weights
+        #calculate only when factor greater than 0
+        if layer.weight_regularizer_l1>0:
+            regularization_loss+=layer.weight_regularizer_l1*np.sum(np.abs(layer.weights))
+
+        #L1 regularization-bias
+        if layer.bias_regularizer_l1>0:
+            regularization_loss+=layer.bias_regularizer_l1*np.sum(np.abs(layer.biases))
+
+        #L2 regularization-weights
+        if layer.weight_regularizer_l2>0:
+            regularization_loss+=layer.weight_regularizer_l2*np.sum(layer.weights*layer.weights)
+
+        #L2 regularization-biases
+        if layer.bias_regularizer_l2>0:
+            regularization_loss+=layer.bias_regularizer_l2*np.sum(layer.biases*layer.biases)
+
+        return regularization_loss
+
     def calculate(self, output,y):
         #Calculate sample losses
         sample_losses=self.forward(output,y)
@@ -68,6 +115,8 @@ class Loss:
         data_loss=np.mean(sample_losses)
         #return Loss
         return data_loss
+  
+        
 
 #we implement the class loss just for the sake of simplicity
 #So we can also see weight values
@@ -267,6 +316,60 @@ class RMSprop_Optimizer:
         layer.biases += -self.current_learning_rate * \
                 layer.dbiases / \
                 (np.sqrt(layer.bias_cache) + self.epsilon)     
+
+    # Call once after any parameter updates
+    def post_update_params(self):
+        self.iterations += 1
+
+#Implementing RMS optimizer
+
+class Adam_Optimizer:
+    def __init__(self, learning_rate=0.001, decay=0., epsilon=1e-7, beta_1=0.9,beta_2=0.999):
+        self.learning_rate = learning_rate
+        self.current_learning_rate = learning_rate
+        self.decay = decay
+        self.iterations = 0
+        self.epsilon=epsilon
+        self.beta_1=beta_1
+        self.beta_2=beta_2
+        
+
+    # Call once before any parameter updates
+    def pre_update_params(self):
+        if self.decay:
+            self.current_learning_rate = self.learning_rate * \
+                (1. / (1. + self.decay * self.iterations))
+
+    # Update parameters
+    def update_param(self, layer):
+        #if layer does not contain cache arrays, create them filled with zeros
+        if not hasattr(layer, 'weights_cache'):
+            layer.weights_cache = np.zeros_like(layer.weights)
+            layer.weights_momentums=np.zeros_like(layer.weights)
+            layer.bias_cache = np.zeros_like(layer.biases)
+            layer.bias_momentums=np.zeros_like(layer.biases)
+
+        #update momentum with current gradients
+        layer.weights_momentums=self.beta_1*layer.weights_momentums + (1-self.beta_1)*layer.dweights
+        layer.bias_momentums=self.beta_1*layer.bias_momentums +(1-self.beta_1)*layer.dbiases
+
+        # self.iteration i 0 at first pass and we need to start with 1 here
+        
+        weights_momentums_corrected=layer.weights_momentums/(1-self.beta_1**(self.iterations+1))
+        bias_momentums_corrected=layer.bias_momentums/(1-self.beta_1**(self.iterations+1))
+        
+        layer.weights_cache=self.beta_2*layer.weights_cache +(1-self.beta_2)*layer.dweights**2
+        layer.bias_cache=self.beta_2*layer.bias_cache +(1-self.beta_2)*layer.dbiases**2
+
+        #Get corrected cache
+        weights_cache_corrected=layer.weights_cache /(1-self.beta_2**(self.iterations+1))
+        bias_cache_corrected=layer.bias_cache/(1-self.beta_2**(self.iterations+1))
+
+        #parameter update + normalization with square rooted cache
+        layer.weights+=-self.current_learning_rate*weights_momentums_corrected/(np.sqrt(weights_cache_corrected)+self.epsilon)
+
+        layer.biases += -self.current_learning_rate *bias_momentums_corrected/(np.sqrt(bias_cache_corrected)+self.epsilon)
+                 
 
     # Call once after any parameter updates
     def post_update_params(self):
