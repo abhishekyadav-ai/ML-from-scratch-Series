@@ -1,6 +1,4 @@
 
-# This file contains the complete implementation of the neural network from scratch up to the Adagrad optimizer.git 
-
 import numpy as np
 
 class Layer_dense:
@@ -81,8 +79,8 @@ class Activation_Softmax:
         probabilities=exp_values/np.sum(exp_values, axis=1, keepdims=True)
         self.output=probabilities
 
-# Implementing the loss class
 
+# Implementing the loss class
 class Loss:
     # regularization loss calculation
     def regularization_loss(self, layer):
@@ -121,8 +119,8 @@ class Loss:
 #we implement the class loss just for the sake of simplicity
 #So we can also see weight values
 
-# Implemnting the categorical cross entropy class
 
+# Implemnting the categorical cross entropy class
 class Loss_CategoricalCrossentropy(Loss):
 
     #Backward [ass
@@ -321,8 +319,8 @@ class RMSprop_Optimizer:
     def post_update_params(self):
         self.iterations += 1
 
-#Implementing RMS optimizer
 
+#Implementing Adam optimizer
 class Adam_Optimizer:
     def __init__(self, learning_rate=0.001, decay=0., epsilon=1e-7, beta_1=0.9,beta_2=0.999):
         self.learning_rate = learning_rate
@@ -374,3 +372,24 @@ class Adam_Optimizer:
     # Call once after any parameter updates
     def post_update_params(self):
         self.iterations += 1
+
+#Dropout layer class
+class Layer_dropout:
+    #Intialize the dropout layer
+    def __init__(self, rate):
+        self.rate=1-rate
+
+    #Forward pass
+    def forward(self, inputs):
+        #Save input values
+        self.inputs=inputs
+        #Generate and save the scaled binary mask
+        self.binary_mask=np.random.binomial(1, self.rate, size=inputs.shape)/self.rate
+        #Apply mask to output values
+        self.output=inputs*self.binary_mask
+
+
+    #Backward pass
+    def backward(self, dvalues):
+        #gradient on values
+        self.dinputs=dvalues*self.binary_mask
