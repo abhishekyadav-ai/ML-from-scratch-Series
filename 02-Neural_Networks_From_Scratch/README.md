@@ -239,18 +239,12 @@ This is primarily a personal learning project, so it isn't structured for extern
 This repository is intended for:
 
 - Students learning deep learning from first principles
-- Developers who want to understand what frameworks like PyTorch and TensorFlow automate
 - Anyone interested in the mathematics behind forward propagation, backpropagation, and optimization
-- Recruiters or engineers looking for an educational implementation of neural networks in pure NumPy
----
-
-## License
-
-Released under the [MIT License](../LICENSE) — free to use, modify, and share.
-
+- Anyone looking for an educational implementation of neural networks in pure NumPy
 ---
 
 ## Acknowledgements
 
-The class structure, dataset (`nnfs`'s `spiral_data`), and overall learning progression in this folder closely follow **Harrison Kinsley and Daniel Kukieła's *Neural Networks from Scratch in Python*** (NNFS). That book/course was the primary reference used while working through this series, and credit belongs to its authors for the pedagogical structure being followed here.
-Special thanks to Harrison Kinsley (Sentdex) and Daniel Kukieła for creating the excellent Neural Networks from Scratch book and course, which served as the primary educational reference for this project.
+This project was developed as part of my journey to better understand the inner workings of neural networks. The overall learning progression, class structure, and use of the `nnfs` package (including the `spiral_data` dataset) were heavily inspired by **Harrison Kinsley (Sentdex)** and **Daniel Kukieła's** excellent book, *Neural Networks from Scratch in Python*, and the accompanying NNFS course.
+
+Special thanks to Harrison Kinsley and Daniel Kukieła for creating such an outstanding educational resource and making complex deep learning concepts accessible through clear explanations and hands-on implementations. Their work served as the primary reference and inspiration for this repository.
