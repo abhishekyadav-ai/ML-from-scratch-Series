@@ -1,10 +1,21 @@
 
 # Neural Networks From Scratch
 
-Implementing a small neural network library — layers, activations, losses, backpropagation, optimizers, and regularization — using only Python and NumPy, no deep learning frameworks.
+A step-by-step educational implementation of neural networks using only Python and NumPy.
 
-This folder is part of the larger [`ML-from-scratch-Series`](../) repository. It documents a progression from a single hardcoded neuron to a trainable multi-layer network with Adam optimization, L1/L2 regularization, and dropout.
+The project starts with a single hardcoded neuron and gradually builds toward a trainable multi-layer neural network featuring manual backpropagation, optimization algorithms, regularization, and dropout—all implemented from first principles without relying on deep learning frameworks.
 
+This folder is part of the larger [`ML-from-scratch-Series`](../) repository.
+
+<p>
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
+![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?style=for-the-badge&logo=numpy)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
+![Educational](https://img.shields.io/badge/Purpose-Educational-success?style=for-the-badge)
+
+</p>
 ---
 
 ## Why this exists
@@ -44,6 +55,8 @@ The notebooks are meant to be read in order — each one builds on the classes d
 
 By the final notebooks, a training step follows this shape:
 
+### Forward and Backward Pass
+
 ```mermaid
 flowchart LR
     X["Input X"] --> D1["Layer_dense (1)"]
@@ -66,6 +79,8 @@ Every class follows the same two-method contract: `forward()` computes and store
 ---
 
 ## Math intuition
+
+The following equations summarize the core operations implemented throughout the notebooks.
 
 **Dense layer forward pass**, for input batch `X`, weights `W`, biases `b`:
 
@@ -211,7 +226,6 @@ Being upfront about what this is *not*:
 - [ ] Generalize to an arbitrary-depth `Sequential`-style container instead of manually chained layers
 - [ ] Evaluate on a real dataset beyond the synthetic spiral data
 - [ ] Refactor optimizers to share a base class (addressing the duplication noted above)
-- [ ] Extend the series with convolutional and recurrent layers in a future folder
 
 ---
 
