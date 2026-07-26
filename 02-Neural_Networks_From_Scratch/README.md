@@ -12,7 +12,6 @@ This folder is part of the larger [`ML-from-scratch-Series`](../) repository.
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
 ![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?style=for-the-badge&logo=numpy)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
 ![Educational](https://img.shields.io/badge/Purpose-Educational-success?style=for-the-badge)
 
 </p>
@@ -235,6 +234,16 @@ This is primarily a personal learning project, so it isn't structured for extern
 
 ---
 
+## Who is this repository for?
+
+This repository is intended for:
+
+- Students learning deep learning from first principles
+- Developers who want to understand what frameworks like PyTorch and TensorFlow automate
+- Anyone interested in the mathematics behind forward propagation, backpropagation, and optimization
+- Recruiters or engineers looking for an educational implementation of neural networks in pure NumPy
+---
+
 ## License
 
 Released under the [MIT License](../LICENSE) — free to use, modify, and share.
@@ -244,3 +253,4 @@ Released under the [MIT License](../LICENSE) — free to use, modify, and share.
 ## Acknowledgements
 
 The class structure, dataset (`nnfs`'s `spiral_data`), and overall learning progression in this folder closely follow **Harrison Kinsley and Daniel Kukieła's *Neural Networks from Scratch in Python*** (NNFS). That book/course was the primary reference used while working through this series, and credit belongs to its authors for the pedagogical structure being followed here.
+Special thanks to Harrison Kinsley (Sentdex) and Daniel Kukieła for creating the excellent Neural Networks from Scratch book and course, which served as the primary educational reference for this project.
