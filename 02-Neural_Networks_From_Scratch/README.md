@@ -11,7 +11,6 @@ This folder is part of the larger [`ML-from-scratch-Series`](../) repository.
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)
 ![NumPy](https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?style=for-the-badge&logo=numpy)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Educational](https://img.shields.io/badge/Purpose-Educational-success?style=for-the-badge)
 
 </p>
